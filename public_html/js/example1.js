@@ -40,7 +40,7 @@ function Example1(){
             var clickedMapSquareX = parseInt(clickX*self.map.getWidth()/self.canvasWidth);
             var clickedMapSquareY = parseInt(clickY*self.map.getHeight()/self.canvasHeight)
             
-            self.updatePlayerPosition(clickedMapSquareX, clickedMapSquareY);            
+            self.movePlayer(clickedMapSquareX, clickedMapSquareY);            
         }, false);
     };
     
@@ -84,6 +84,10 @@ function Example1(){
                 }
             }
         }
+    };
+    
+    this.movePlayer = function(destinationX, destinationY){
+        this.updatePlayerPosition(destinationX, destinationY);
     };
     
     //Update the play position on the map and redraw the canvas
