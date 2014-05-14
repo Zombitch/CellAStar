@@ -6,6 +6,7 @@ body{
 {
     width: 800px;
     height: 600px;
-    margin:auto;
+    margin: auto;
+    margin-top: 50px;
     background-color: gray;
 }

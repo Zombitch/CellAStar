@@ -35,6 +35,10 @@ function Map()
     
     //Get the data at given index X and Y
     this.getDataAtIndex = function(x, y){
-        return this.data[x, y];
+        return this.data[x][y];
     } 
+    
+    this.setDataAtIndex = function(x, y, newData){
+        this.data[x][y] = newData;
+    };
 };
