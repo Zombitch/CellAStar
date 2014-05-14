@@ -1,0 +1,11 @@
+body{
+    margin: auto;
+}
+
+.canvasContainer
+{
+    width: 800px;
+    height: 600px;
+    margin:auto;
+    background-color: gray;
+}
