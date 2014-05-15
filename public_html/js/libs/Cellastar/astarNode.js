@@ -59,15 +59,23 @@
         return this.distanceFromStart;       
     };
     
-    this.getDistanceFromStart = function(newDistance){
+    this.setDistanceFromStart = function(newDistance){
         this.distanceFromStart = newDistance;       
     };
     
-    this.getDistanceFromEnd = function(newDistance){
+    this.getDistanceFromEnd = function(){
+        return this.distanceFromEnd;       
+    };
+    
+    this.setDistanceFromEnd = function(newDistance){
         this.distanceFromEnd = newDistance;       
     };
     
-    this.getTotalDistance = function(newDistance){
+    this.getTotalDistance = function(){
+        return this.totalDistance;
+    };
+    
+    this.setTotalDistance = function(newDistance){
         this.totalDistance = newDistance;
     };
  };

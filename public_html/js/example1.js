@@ -87,6 +87,9 @@ function Example1(){
     };
     
     this.movePlayer = function(destinationX, destinationY){
+        var playerPosition = this.getPlayerPosition();
+        var pathfinder = new Astar();
+        pathfinder.findPath(this.map.getData(), playerPosition["X"], playerPosition["Y"], destinationX, destinationY, new Array());
         this.updatePlayerPosition(destinationX, destinationY);
     };
     
