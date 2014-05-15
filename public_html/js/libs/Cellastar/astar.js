@@ -24,17 +24,43 @@ function Astar(){
         var nodeList = this.getNodeArray(mapArray);
         var startNode = nodeList[startX][startY];
         var endNode = nodeList[endX][endY];
+        var currentNode = null;
         
+        this.addToOpenList(startNode);   
         
+        while(this.openList.length > 0)
+        {
+            currentNode = this.getCurrentNode();
+            
+            if(currentNode == endNode)
+                break;
+                
+            this.addToCloseList(currentNode);
+            
+            var neighbours = this.getNeighbours(currentNode, nodeList); 
+            var neighbourCount = neighbours.length;
+            
+            for(var idx = 0; idx < neighbourCount; idx++)
+            {
+                var neighbourNode = neighbours[idx];
+                
+                if(this.existInList(this.closeList, neighbourNode)) //|| neighbourNode.walkable == false ) 
+                    continue;
+            }
+            
+            break;
+        }
+
+        return this.path;
     };
 
     //Remove a node from a list (openList or closeList, it depends on which list you send as parameter)
     this.removeFromList = function(list, nodeToRemove){
-        var listCount = this.list.length;
+        var listCount = list.length;
         
         for(var idx = 0; idx < listCount; idx++)
         {
-            if(this.list[idx] === nodeToRemove)
+            if(list[idx] == nodeToRemove)
             {
                 list.splice(idx, 1);
                 break;
@@ -44,11 +70,11 @@ function Astar(){
     
     // Check if a node is present in a list
     this.existInList = function(list, node){
-        var listCount = this.list.length;
+        var listCount = list.length;
         
         for(var idx = 0; idx < listCount; idx++)
         {
-            if(this.list[idx] === node)
+            if(list[idx] == node)
             {
                 return true;
             }
@@ -75,13 +101,13 @@ function Astar(){
         var minimumDistance = Number.MAX_VALUE;
         var currentNode = null;
         
-        for(var idx = 0; idx < openListCount; i++)
+        for(var idx = 0; idx < openListCount; idx++)
         {
             var node = this.openList[idx];
             
             if(node.getTotalDistance() < minimumDistance)
             {
-                minimumDistance = ode.getTotalDistance();
+                minimumDistance = node.getTotalDistance();
                 currentNode = node;
             }
         }
