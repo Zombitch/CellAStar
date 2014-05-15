@@ -30,6 +30,9 @@ function Example1(){
         //Set the player value on the map
         this.map.setDataAtIndex(0, 0, 1);
         
+        //Set a block value        
+        this.map.setDataAtIndex(1, 1, 2);
+        
         //Add a click listener on the canvas, this way the user will be able to move the "character"
         this.canvas.addEventListener('click', function(event) {
             //Get the position of the click in the canvas (top left corner is equal to x = 0 and y = 0)
@@ -61,6 +64,8 @@ function Example1(){
                 //Draw light green rectangle where the player is standing
                 else if(this.map.getDataAtIndex(idx, jdx) == 1)
                     this.canvasContext.fillStyle = "#AACCA0";
+                else if(this.map.getDataAtIndex(idx, jdx) == 2)
+                    this.canvasContext.fillStyle = "#585650";
                 
                 this.canvasContext.fillRect(entityX, entityY, this.canvasWidth/this.map.getWidth(), this.canvasHeight/this.map.getHeight());
                 this.canvasContext.strokeStyle = "#EEE4DA";

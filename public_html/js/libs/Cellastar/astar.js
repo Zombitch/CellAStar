@@ -11,21 +11,19 @@ function Astar(){
     
     /*Compute the best path to go to the destination.
     *Parameters description :
-    * - map is a Map object it contains all data that the algorithm will use to determine if each point is available for the path destination.
+    * - mapArray is a Map object it contains all data that the algorithm will use to determine if each point is available for the path destination.
     * - startX and startY is the start location.
     * - endX and endY is the end location.
     * - forbidenArea is an array of some values. The algorithm will consider these value as forbidden and will make the path avoiding those points.
     */
-    this.findPath = function(map, startX, startY, endX, endY, forbiddenArea){
+    this.findPath = function(mapArray, startX, startY, endX, endY, forbiddenArea){
     
-        var startNode = new AstarNode();
-        var endNode = new AstarNode();
         this.openList = new Array();
         this.closeList = new Array();
         this.path = new Array();
-        
-        startNode.init(startX, startY, map[startX][startY]);
-        endNode.init(endX, endY, map[endX][endY]);
+        var nodeList = this.getNodeArray(mapArray);
+        var startNode = nodeList[startX][startY];
+        var endNode = nodeList[endX][endY];
         
         
     };
@@ -80,21 +78,58 @@ function Astar(){
         for(var idx = 0; idx < openListCount; i++)
         {
             var node = this.openList[idx];
+            
+            if(node.getTotalDistance() < minimumDistance)
+            {
+                minimumDistance = ode.getTotalDistance();
+                currentNode = node;
+            }
         }
         
         return currentNode;
-        /*
-        for( var i:int = 0; i < maximum; ++i )
-      {
-        var node:Node = m_openList[i] as Node;
- 
-        if( node.f < minF )
+    };
+    
+    //Find node's neighbours
+    this.getNeighbours = function(node, nodeArray){
+        var neighbours = new Array();
+        var nodeArrayWidth = nodeArray.length;
+        var nodeArrayHeight = nodeArray[0].length;
+        var top = node.getY() - 1;
+        var bottom = node.getY() + 1;
+        var left = node.getX() - 1;
+        var right = node.getX() + 1;
+        
+        if(top >= 0)
+            neighbours.push(nodeArray[node.getX()][top]);
+        
+        if(bottom < nodeArrayHeight)
+            neighbours.push(nodeArray[node.getX()][bottom]);
+        
+        if(left >= 0)
+            neighbours.push(nodeArray[left][node.getY()]);
+            
+        if(right < nodeArrayWidth)
+            neighbours.push(nodeArray[right][node.getY()]);
+            
+        return neighbours;
+    };
+    
+    //Build a node array that rely on the map array
+    this.getNodeArray = function(mapArray){
+        var nodeArray = new Array();
+        var mapArrayWidth = mapArray.length;
+        var mapArrayHeight = mapArray[0].length;
+        
+        for(var idx = 0; idx < mapArrayWidth; idx++)
         {
-          minF = node.f;
-          curNode = node;
+            nodeArray[idx] = new Array();
+            for(var jdx = 0; jdx < mapArrayHeight; jdx++)
+            {
+                var node = new AstarNode();
+                node.init(idx, jdx, mapArray[idx][jdx])
+                nodeArray[idx][jdx] = node;
+            }
         }
-      }
- 
-      return curNode;*/
+        return nodeArray;
     };
 };
