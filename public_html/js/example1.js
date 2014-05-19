@@ -94,22 +94,27 @@ function Example1(){
     this.movePlayer = function(destinationX, destinationY){
         var playerPosition = this.getPlayerPosition();
         var pathfinder = new Astar();
-        pathfinder.findPath(this.map.getData(), playerPosition["X"], playerPosition["Y"], destinationX, destinationY, new Array());
-        this.updatePlayerPosition(destinationX, destinationY);
+        var path = pathfinder.findPath(this.map.getData(), playerPosition["X"], playerPosition["Y"], destinationX, destinationY, new Array(2));
+        this.updatePlayerPosition(path, 0);        
     };
     
     //Update the play position on the map and redraw the canvas
-    this.updatePlayerPosition = function(newX, newY){
-    
-        //Get current player position
-        var currentPlayerPosition = this.getPlayerPosition();
-        
-        //remove the player from current player
-        this.map.setDataAtIndex(currentPlayerPosition["X"], currentPlayerPosition["Y"], 0);
-        //Assign the new position to the player
-        this.map.setDataAtIndex(newX, newY, 1);
-        
-        //Update canvas drawings
-        this.draw();
+    this.updatePlayerPosition = function(path, currentIndex){
+        if(currentIndex < path.length)
+        {
+            setTimeout(function(){
+                //Get current player position
+                var currentPlayerPosition = self.getPlayerPosition();
+                
+                //remove the player from current player
+                self.map.setDataAtIndex(currentPlayerPosition["X"], currentPlayerPosition["Y"], 0);
+                //Assign the new position to the player
+                self.map.setDataAtIndex(path[currentIndex].getX(), path[currentIndex].getY(), 1);
+                
+                //Update canvas drawings
+                self.draw();
+                self.updatePlayerPosition(path, ++currentIndex);
+            }, 500);
+        }
     };
 }

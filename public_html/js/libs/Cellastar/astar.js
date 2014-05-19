@@ -46,11 +46,50 @@ function Astar(){
                 
                 if(this.existInList(this.closeList, neighbourNode)) //|| neighbourNode.walkable == false ) 
                     continue;
+                
+                var newDistanceFromStart = 0;
+                if(neighbourNode.getParent() == null)
+                    var newDistanceFromStart = this.distanceBetweenNode;
+                else
+                    var newDistanceFromStart = neighbourNode.getParent().getDistanceFromStart() + this.distanceBetweenNode;
+                    
+                var newDistanceToEnd = (Math.abs(endX - neighbourNode.getX()) + Math.abs(endY - neighbourNode.getY())) * this.distanceBetweenNode;
+                var newTotalDistance = newDistanceFromStart + newDistanceToEnd;
+                
+                if(this.existInList(this.openList, neighbourNode))
+                {
+                    if(newDistanceFromStart < neighbourNode.getDistanceFromStart())
+                    {
+                        neighbourNode.setParent(currentNode);
+                        neighbourNode.setDistanceFromStart(newDistanceFromStart);
+                        neighbourNode.setDistanceToEnd(newDistanceToEnd);
+                        neighbourNode.setTotalDistance(newTotalDistance);
+                    }
+                }
+                else
+                {
+                    this.addToOpenList(neighbourNode);
+                    neighbourNode.setParent(currentNode);
+                    neighbourNode.setDistanceFromStart(newDistanceFromStart);
+                    neighbourNode.setDistanceToEnd(newDistanceToEnd);
+                    neighbourNode.setTotalDistance(newTotalDistance);
+                }
+                
             }
-            
-            break;
         }
-
+        
+        //If there is, at least, one solution
+        if(this.openList.length > 0)
+        {
+            var lastNode = endNode;
+            while(lastNode != startNode)
+            {
+                this.path.push( lastNode );
+                lastNode = lastNode.parent;
+            }
+        }
+        this.path.reverse();
+        console.log(this.path);
         return this.path;
     };
 

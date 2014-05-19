@@ -63,11 +63,11 @@
         this.distanceFromStart = newDistance;       
     };
     
-    this.getDistanceFromEnd = function(){
+    this.getDistanceToEnd = function(){
         return this.distanceFromEnd;       
     };
     
-    this.setDistanceFromEnd = function(newDistance){
+    this.setDistanceToEnd = function(newDistance){
         this.distanceFromEnd = newDistance;       
     };
     
