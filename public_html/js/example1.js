@@ -94,7 +94,8 @@ function Example1(){
     this.movePlayer = function(destinationX, destinationY){
         var playerPosition = this.getPlayerPosition();
         var pathfinder = new Astar();
-        var path = pathfinder.findPath(this.map.getData(), playerPosition["X"], playerPosition["Y"], destinationX, destinationY, new Array(2));
+        var forbiddenArea = [2];
+        var path = pathfinder.findPath(this.map.getData(), playerPosition["X"], playerPosition["Y"], destinationX, destinationY, forbiddenArea);
         this.updatePlayerPosition(path, 0);        
     };
     

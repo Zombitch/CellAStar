@@ -44,7 +44,7 @@ function Astar(){
             {
                 var neighbourNode = neighbours[idx];
                 
-                if(this.existInList(this.closeList, neighbourNode)) //|| neighbourNode.walkable == false ) 
+                if(this.existInList(this.closeList, neighbourNode) || this.isForbiddenArea(neighbourNode, forbiddenArea))
                     continue;
                 
                 var newDistanceFromStart = 0;
@@ -89,7 +89,7 @@ function Astar(){
             }
         }
         this.path.reverse();
-        console.log(this.path);
+        
         return this.path;
     };
 
@@ -196,5 +196,18 @@ function Astar(){
             }
         }
         return nodeArray;
+    };
+    
+    //Check if a node is a forbidden area
+    this.isForbiddenArea = function(node, forbiddenAreaArray){
+        var count = forbiddenAreaArray.length;
+        
+        for(var idx = 0; idx < count; idx ++)
+        {
+            if(node.getValue() == forbiddenAreaArray[idx])
+                return true;
+        }
+        
+        return false;
     };
 };
